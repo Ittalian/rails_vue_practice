@@ -32,7 +32,7 @@ const routes = [
           component: SignUpPage,
           beforeEnter: (to, _, next) => {
             if(store.getters.loggedIn) {
-              next({name: 'TopPage'})
+              alert("すでにログインしています");
             } else {
               next();
             }
@@ -44,7 +44,7 @@ const routes = [
             component: LoginPage,
             beforeEnter: (to, _, next) => {
               if(store.getters.loggedIn) {
-                next({name: 'TopPage'})
+              alert("すでにログインしています");
               } else {
                 next();
               }
