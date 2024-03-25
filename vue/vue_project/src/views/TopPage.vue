@@ -2,39 +2,8 @@
   <div class="top-page">
     <Header class="header"/>
     <div class="title">トップページ</div>
-    <!-- <router-link :to="{ name: 'SamplePage' }">サンプルページを見る</router-link> -->
     <router-link :to="{ name: 'SignUpPage' }">新規登録ページ</router-link><br>
     <router-link :to="{ name: 'LoginPage' }">ログインページ</router-link>
-      <!-- <div class="input-area">
-        <div>
-          <label>ユーザー名</label>
-          <input class="input-text" type="text" v-model="name">
-        </div>
-        <div>
-          <label>メールアドレス</label>
-          <input class="input-text" type="text" v-model="email">
-        </div>
-        <div>
-          <label>パスワード</label>
-          <input class="input-text" type="text" v-model="password">
-        </div>
-      </div>
-    <div class="add-button" @click="signUp">新規登録</div>
-      <div class="input-area">
-          <div>
-            <label>ユーザー名</label>
-            <input class="input-text" type="text" v-model="loginName">
-          </div>
-          <div>
-            <label>メールアドレス</label>
-            <input class="input-text" type="text" v-model="loginEmail">
-          </div>
-          <div>
-            <label>パスワード</label>
-            <input class="input-text" type="text" v-model="loginPassword">
-          </div>
-        </div>
-    <div class="add-button" @click="login">ログイン</div> -->
   </div>
 </template>
 
