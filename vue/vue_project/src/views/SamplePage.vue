@@ -1,10 +1,12 @@
 <template>
   <div class="sample-page">
+    <Header class="header"/>
     <div class="title">これはサンプルページです</div>
     <router-link :to="{ name: 'TopPage' }"> トップページに戻る</router-link>
     <div class="sample-item-form">
       <input class="input-sample-item-text" type="text" v-model="inputText">
       <div class="add-button" @click="addSampleItem">追加</div>
+      <div class="add-button" @click="logout">ログアウト</div>
     </div>
     <div class="sample-item-cards">
       <SampleItemCard
@@ -18,16 +20,19 @@
 
 <script>
 import SampleItemCard from '@/components/SampleItemCard'
+import Header from '@/components/Header'
 
 export default {
   name: 'SamplePage',
   components: {
     SampleItemCard,
+    Header,
   },
   data() {
     return {
       sampleItems: [],
       inputText: '',
+      url_top_id: '/',
     };
   },
   created() {
@@ -44,6 +49,10 @@ export default {
       await this.$store.dispatch('addSampleItem', { text: this.inputText });
       this.inputText = '';
     },
+    async logout() {
+        await this.$store.dispatch('logout');
+        location.href = this.url_top_id;
+    }
   }
 }
 </script>
@@ -64,6 +73,13 @@ export default {
     font-weight: bold;
   }
 
+  .header {
+        text-align: center;
+        font-size:xx-large;
+        font-weight: bold;
+        color: #5af;
+  }
+
   .sample-item-form {
     display: flex;
     gap: 36px;
@@ -80,7 +96,7 @@ export default {
 
     .add-button {
       height: 40px;
-      width: 64px;
+      width: 85px;
       border-radius: 4px;
       line-height: 40px;
       text-align: center;

@@ -1,8 +1,11 @@
 <template>
   <div class="top-page">
+    <Header class="header"/>
     <div class="title">トップページ</div>
-    <router-link :to="{ name: 'SamplePage' }">サンプルページを見る</router-link>
-      <div class="input-area">
+    <!-- <router-link :to="{ name: 'SamplePage' }">サンプルページを見る</router-link> -->
+    <router-link :to="{ name: 'SignUpPage' }">新規登録ページ</router-link><br>
+    <router-link :to="{ name: 'LoginPage' }">ログインページ</router-link>
+      <!-- <div class="input-area">
         <div>
           <label>ユーザー名</label>
           <input class="input-text" type="text" v-model="name">
@@ -31,14 +34,19 @@
             <input class="input-text" type="text" v-model="loginPassword">
           </div>
         </div>
-    <div class="add-button" @click="login">ログイン</div>
+    <div class="add-button" @click="login">ログイン</div> -->
   </div>
 </template>
 
 <script>
+import Header from '@/components/Header'
 
 export default {
+
   name: 'TopPage',
+  components: {
+    Header,
+  },
   data() {
     return {
       name: '',
@@ -51,18 +59,16 @@ export default {
   },
   methods: {
     async signUp() {
-      // if (!this.name || !this.email || this.password) {
-      //   return window.alert('テキストを入力してください');
-      // }
       await this.$store.dispatch('signUp', { name: this.name, email: this.email, password: this.password });
       this.name = '';
       this.email = '';
       this.password = '';
-      console.log("関数実装");
     },
     async login() {
-      await this.$store.dispatch('login');
-      this.inputText = '';
+      await this.$store.dispatch('login', { name: this.loginName, email: this.loginEmail, password: this.loginPassword });
+      this.loginName = '';
+      this.loginEmail = '';
+      this.loginPassword = '';
     }
   }
 }
@@ -70,9 +76,16 @@ export default {
 
 <style lang="scss" scoped>
 .top-page {
+  text-align: center;
   .title {
     font-size: 36px;
     font-weight: bold;
+  }
+  .header {
+        text-align: center;
+        font-size:xx-large;
+        font-weight: bold;
+        color: #5af;
   }
   .add-button {
       height: 40px;

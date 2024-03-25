@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from '@/api'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -8,9 +9,11 @@ export default new Vuex.Store({
   state: {
     sampleItems: [],
     usersData: [],
+    loggedIn: false,
   },
   getters: {
     sampleItems: state => state.sampleItems,
+    loggedIn: state => state.loggedIn,
   },
   actions: {
     async loadSampleItems({commit}) {
@@ -25,33 +28,19 @@ export default new Vuex.Store({
       commit('addSampleItem', { sampleItem });
       return sampleItem;
     },
-    async login() {
-      api.get('login').then(res => {
-        if (res.data) {
-          console.log("ログイン");
-          console.log(res.data);
-        }
-        else {
-          console.log("error");
-          console.log(res.data);
-        }
-      })
+    async login({commit}, {name, email, password}) {
+      const res = await api.post('login', {login_data: {name: name, email: email, password: password}});
+      const loginData = res.data.login_data;
+      commit('login', this.state.loggedIn);
+      return loginData;
+    },
+    async logout({commit}) {
+      commit('logout');
     },
     async signUp({commit}, {name, email, password}) {
-      // api.post('signup', { name: name, email: email, password: password }).then(res => {
-      //   if (res.data) {
-      //     console.log("登録");
-      //     console.log("res.data: " + res.data);
-      //   }
-      //   else {
-      //     console.log("エラー");
-      //     console.log("res.data: " + res.data);
-      //   }
-      // })
       const res = await api.post('signup', {user_data: {name: name, email: email, password: password}});
       const userData = res.data.user_data;
-      commit('signUp', [userData]);
-      console.log(userData);
+      commit('signUp', this.state.loggedIn);
       return userData;
     },
   },
@@ -64,10 +53,25 @@ export default new Vuex.Store({
     },
     signUp(state, { usersData }) {
       state.usersData = usersData;
+      state.loggedIn = true;
     },
-    login(state, { usersData }) {
-      state.usersData = usersData;
+    login(state, { loginData }) {
+      state.loginData = loginData;
+      state.loggedIn = true;
+    },
+    logout(state) {
+      state.loggedIn = false;
     }
   },
-  modules: {}
+  modules: {},
+  plugins: [createPersistedState(
+    { // ストレージのキーを指定
+      key: 'rails_vue_practice',
+      // ストレージの種類を指定
+      paths: [
+        'loggedIn',
+      ],
+      storage: window.sessionStorage,
+    }
+  )]
 })
