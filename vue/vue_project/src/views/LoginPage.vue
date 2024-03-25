@@ -36,7 +36,7 @@
         loginEmail: '',
         loginPassword: '',
         loggedIn: this.$store.state.loggedIn,
-        url_sample_id: '/sample',
+        url_sample_id: '/todo',
       };
     },
     methods: {

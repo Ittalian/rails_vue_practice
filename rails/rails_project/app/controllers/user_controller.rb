@@ -9,7 +9,7 @@ class UserController < ApplicationController
             render_success user_param: { name: user_params[:name],  email: user_params[:email], password: user_params[:password] } 
             puts user_params
         else
-            render :new
+            render_error
         end
     end
 

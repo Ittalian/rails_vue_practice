@@ -10,10 +10,12 @@ export default new Vuex.Store({
     sampleItems: [],
     usersData: [],
     loggedIn: false,
+    tasks: [],
   },
   getters: {
     sampleItems: state => state.sampleItems,
     loggedIn: state => state.loggedIn,
+    tasks: state => state.tasks,
   },
   actions: {
     async loadSampleItems({commit}) {
@@ -27,6 +29,21 @@ export default new Vuex.Store({
       const sampleItem = res.data.sample_item;
       commit('addSampleItem', { sampleItem });
       return sampleItem;
+    },
+    //タスク読み込み
+    async loadTasks({commit}) {
+      const res = await api.get('tasks');
+      const tasks = res.data.task_params;
+      commit('setTasks', { tasks });
+      console.log(tasks);
+      return tasks;
+    },
+    //タスク追加
+    async addTask({commit}, {title}) {
+      const res = await api.post('tasks', { task: { title: title }});
+      const task = res.data.task;
+      commit('addTask', { task });
+      return task;
     },
     async login({commit}, {name, email, password}) {
       const res = await api.post('login', {login_data: {name: name, email: email, password: password}});
@@ -61,6 +78,12 @@ export default new Vuex.Store({
     },
     logout(state) {
       state.loggedIn = false;
+    },
+    setTasks(state, { tasks }) {
+      state.tasks = tasks;
+    },
+    addTask(state, { tasks }) {
+      state.tasks = tasks;
     }
   },
   modules: {},

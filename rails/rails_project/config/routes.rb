@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     get '/sample_items', to: 'sample_items#index'
     post '/sample_items', to: 'sample_items#create'
 
+    get 'tasks', to: 'tasks#index'
+    post 'tasks', to: 'tasks#create' 
+
     get 'signup', to: 'user#new'
     post 'signup', to: 'user#create'
     get '/login', to:  'sessions#new'

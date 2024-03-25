@@ -34,7 +34,7 @@
         name: '',
         email: '',
         password: '',
-        url_sample_id: '/sample',
+        url_sample_id: '/todo'
       };
     },
     methods: {
