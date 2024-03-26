@@ -52,7 +52,7 @@ export default {
     async logout() {
         await this.$store.dispatch('logout');
         location.href = this.url_top_id;
-    }
+    },
   }
 }
 </script>

@@ -6,7 +6,8 @@ Rails.application.routes.draw do
     post '/sample_items', to: 'sample_items#create'
 
     get 'tasks', to: 'tasks#index'
-    post 'tasks', to: 'tasks#create' 
+    post 'tasks', to: 'tasks#create'
+    post 'tasks_complete', to: 'tasks#complete' 
 
     get 'signup', to: 'user#new'
     post 'signup', to: 'user#create'

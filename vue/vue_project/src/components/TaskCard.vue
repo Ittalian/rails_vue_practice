@@ -1,9 +1,10 @@
 <template>
-    <div class="tasks">
+    <div class="tasks" >
       <div class="tasks-title">{{ task.title }}</div>
+      <div class="complete-button" @click="completeTask">完了</div>
     </div>
 </template>
-  
+
   <script>
   export default {
     name: 'TaskCard',
@@ -14,6 +15,16 @@
         default: () => {},
       },
     },
+    methods: {
+      async completeTask() {
+        if (confirm("このタスクを完了しますか?")) {
+          await this.$store.dispatch('completeTask', { title: this.task.title });
+          alert("完了したタスクを削除しました");
+        }
+
+        location.reload();
+      },
+    }
   }
   </script>
   
@@ -30,6 +41,25 @@
     border-radius: 8px;
     box-shadow: 2px 2px 4px #bbb;
     cursor: pointer;
+
+    .complete-button {
+        height: auto;
+        width: 50px;
+        margin-left: 80%;
+        border-radius: 4px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #5af;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        user-select: none;
+  
+        &:hover {
+          background-color: #7cf;
+        }
+      }
   
     &-title {
       font-size: 16px;

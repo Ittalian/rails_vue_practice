@@ -46,6 +46,7 @@ const routes = [
     beforeEnter: (to, _, next) => {
       if(store.getters.loggedIn) {
         alert("すでにログインしています");
+        next({name: 'TodoPage'});
       } else {
         next();
       }
@@ -57,7 +58,8 @@ const routes = [
       component: LoginPage,
       beforeEnter: (to, _, next) => {
         if(store.getters.loggedIn) {
-        alert("すでにログインしています");
+          alert("すでにログインしています");
+          next({name: 'TodoPage'});
         } else {
           next();
         }

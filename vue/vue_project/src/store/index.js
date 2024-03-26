@@ -45,6 +45,13 @@ export default new Vuex.Store({
       commit('addTask', { task });
       return task;
     },
+    async completeTask({commit}, {title}) {
+      const res = await api.post('tasks_complete', { task: { title: title }});
+      const task = res.data.task;
+      commit('completeTask', { task });
+      console.log(task);
+      return task;
+    },
     async login({commit}, {name, email, password}) {
       const res = await api.post('login', {login_data: {name: name, email: email, password: password}});
       const loginData = res.data.login_data;
@@ -83,6 +90,9 @@ export default new Vuex.Store({
       state.tasks = tasks;
     },
     addTask(state, { tasks }) {
+      state.tasks = tasks;
+    },
+    completeTask(state, { tasks }) {
       state.tasks = tasks;
     }
   },

@@ -1,10 +1,12 @@
 <template>
   <header>
-    <div class="left-section">
-      <span></span>
-    </div>
-    <div class="right-section">
+    <div class="header-section">
       <span class="header">{{ $store.state.loggedIn == true ? "ログイン済み" : "未ログイン" }}</span>
+      <div class="right-section">
+        <router-link :to="{ name: 'SignUpPage' }" class="signup-link">新規登録</router-link>
+        <router-link :to="{ name: 'LoginPage' }" class="login-link">ログイン</router-link>
+        <router-link :to="{ name: 'EveryonePage' }" class="everyone-link" v-show="$store.state.loggedIn">みんなのタスク</router-link>
+      </div>
     </div>
   </header>
 </template>
@@ -20,33 +22,34 @@ methods: {
     logout() {
       this.loggedIn = false;
       this.$emit('logout-success');
+    },
+    async logout2() {
+      this.loggedIn = false;
+      this.$emit('logout-success');
+      await this.$store.dispatch('logout');
     }
 }
 };
 </script>
   
 <style>
-.login-button {
-    height: auto;
-    width: 100px;
-    border-radius: 4px;
-    line-height: 40px;
-    text-align: center;
-    background-color: #5af;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    user-select: none;
-    margin-left: 50%;
-    margin-bottom: 20px;
-
-    &:hover {
-    background-color: #7cf;
-    }
+.header-section {
+  display: flex;
+  margin-left: 25%;
 }
 .header {
-  text-align: center;
-  height: 200px;
+height: 200px;
+width: 100%;
+}
+.right-section {
+  width: 50%;
+  font-size: medium;
+  display: flex; 
+}
+.signup-link {
+  margin-right: 10px;
+}
+.login-link {
+  margin-right: 10px;
 }
 </style>

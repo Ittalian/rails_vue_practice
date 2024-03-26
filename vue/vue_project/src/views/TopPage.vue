@@ -2,8 +2,6 @@
   <div class="top-page">
     <Header class="header"/>
     <div class="title">トップページ</div>
-    <router-link :to="{ name: 'SignUpPage' }">新規登録ページ</router-link><br>
-    <router-link :to="{ name: 'LoginPage' }">ログインページ</router-link>
   </div>
 </template>
 
@@ -49,6 +47,8 @@ export default {
   .title {
     font-size: 36px;
     font-weight: bold;
+    margin-top: 100px;
+    margin-right: 15px;
   }
   .header {
         text-align: center;

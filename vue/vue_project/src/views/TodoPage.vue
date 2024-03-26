@@ -46,6 +46,7 @@
         return window.alert('テキストを入力してください');
         }
         await this.$store.dispatch('addTask', { title: this.inputText });
+        alert("タスクを追加しました");
         this.inputText = '';
         this.loadTasks();
       },
