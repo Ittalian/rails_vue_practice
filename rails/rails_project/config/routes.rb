@@ -5,15 +5,20 @@ Rails.application.routes.draw do
     get '/sample_items', to: 'sample_items#index'
     post '/sample_items', to: 'sample_items#create'
 
-    get 'tasks', to: 'tasks#index'
-    post 'tasks', to: 'tasks#create'
-    post 'tasks_complete', to: 'tasks#complete' 
+    get '/tasks', to: 'tasks#index'
+    post '/tasks', to: 'tasks#create'
+    post '/tasks_complete', to: 'tasks#complete' 
 
-    get 'signup', to: 'user#new'
-    post 'signup', to: 'user#create'
-    get '/login', to:  'sessions#new'
+    get '/signup', to: 'user#new'
+    post '/signup', to: 'user#create'
+
+    get '/login', to: 'sessions#new'
     post '/login', to: 'sessions#create'
     get '/logout', to: 'sessions#destroy'
+
+    get '/everyone', to: 'everyone#index'
+    # get '/task_details', to: 'everyone#detail'
+    post '/get_user', to: 'everyone#getUser'
 
     get '*path', to: 'application#not_found'
   end

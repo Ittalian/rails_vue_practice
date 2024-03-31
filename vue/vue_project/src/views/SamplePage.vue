@@ -6,7 +6,6 @@
     <div class="sample-item-form">
       <input class="input-sample-item-text" type="text" v-model="inputText">
       <div class="add-button" @click="addSampleItem">追加</div>
-      <div class="add-button" @click="logout">ログアウト</div>
     </div>
     <div class="sample-item-cards">
       <SampleItemCard
@@ -48,10 +47,6 @@ export default {
       }
       await this.$store.dispatch('addSampleItem', { text: this.inputText });
       this.inputText = '';
-    },
-    async logout() {
-        await this.$store.dispatch('logout');
-        location.href = this.url_top_id;
     },
   }
 }

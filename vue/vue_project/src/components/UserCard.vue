@@ -1,34 +1,40 @@
 <template>
-    <div class="tasks" >
-      <div class="tasks-title">{{ task.title }}</div>
-      <div class="complete-button" @click="completeTask">完了</div>
+    <div class="users" >
+      <div class="users-title">{{ user.name }}のタスク</div>
+      <div class="complete-button" @click="getUser">詳細</div>
     </div>
 </template>
 
   <script>
   export default {
-    name: 'TaskCard',
+    name: 'UserCard',
     components: {},
     props: {
-      task: {
+      user: {
         type: Object,
         default: () => {},
       },
+      taskDetails: {
+        type: Object,
+        default: () => {},
+      }
+    },
+    data() {
+        return {
+          url_detail_id: '/detail',
+        }
     },
     methods: {
-      async completeTask() {
-        if (confirm("このタスクを完了しますか?")) {
-          await this.$store.dispatch('completeTask', { title: this.task.title });
-          alert("完了したタスクを削除しました");
-        }
-        location.reload();
+      async getUser() {
+        await this.$store.dispatch('getUser', { user_id: this.user.id });
+        location.href = this.url_detail_id;
       },
     }
   }
   </script>
   
   <style lang="scss" scoped>
-  .tasks {
+  .users {
     position: relative;
     width: 300px;
     height: min-content;

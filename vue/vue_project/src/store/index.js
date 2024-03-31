@@ -11,11 +11,16 @@ export default new Vuex.Store({
     usersData: [],
     loggedIn: false,
     tasks: [],
+    taskDetails: [],
+    // userId: 0,
+    taskUser: [],
   },
   getters: {
     sampleItems: state => state.sampleItems,
     loggedIn: state => state.loggedIn,
     tasks: state => state.tasks,
+    userId: state => state.userId,
+    taskUser: state => state.taskUser,
   },
   actions: {
     async loadSampleItems({commit}) {
@@ -35,7 +40,6 @@ export default new Vuex.Store({
       const res = await api.get('tasks');
       const tasks = res.data.task_params;
       commit('setTasks', { tasks });
-      console.log(tasks);
       return tasks;
     },
     //タスク追加
@@ -49,8 +53,18 @@ export default new Vuex.Store({
       const res = await api.post('tasks_complete', { task: { title: title }});
       const task = res.data.task;
       commit('completeTask', { task });
-      console.log(task);
       return task;
+    },
+    async getUser({commit}, {user_id}) {
+      const res = await api.post('get_user', { task_user: { user_id: user_id }})
+      const taskUser = res.data.task_detail_params;
+      commit('setUser', {taskUser});
+    },
+    async loadUsers({commit}) {
+      const res = await api.get('everyone');
+      const users = res.data.user_params;
+      commit('setUsers', { users });
+      return users;
     },
     async login({commit}, {name, email, password}) {
       const res = await api.post('login', {login_data: {name: name, email: email, password: password}});
@@ -94,6 +108,16 @@ export default new Vuex.Store({
     },
     completeTask(state, { tasks }) {
       state.tasks = tasks;
+    },
+    setUsers(state, { usersData }) {
+      state.usersData = usersData;
+    },
+    setTaskDetails(state, { taskDetails }) {
+      state.taskDetails = taskDetails;
+    },
+    setUser(state, { taskUser }) {
+      state.taskUser = taskUser;
+      // state.userId = userId;
     }
   },
   modules: {},
@@ -103,6 +127,8 @@ export default new Vuex.Store({
       // ストレージの種類を指定
       paths: [
         'loggedIn',
+        'taskUser',
+        // 'userId',
       ],
       storage: window.sessionStorage,
     }

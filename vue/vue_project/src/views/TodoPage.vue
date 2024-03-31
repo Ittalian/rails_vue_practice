@@ -4,8 +4,7 @@
       <div class="add-task-form">
           <input class="input-sample-item-text" type="text" v-model="inputText">
           <div class="add-button" @click="addTask">追加</div>
-          <div class="add-button" @click="logout">ログアウト</div>
-        </div>
+      </div>
         <div class="tasks">タスク一覧</div>
         <div class="task-cards">
         <TaskCard
@@ -50,10 +49,10 @@
         this.inputText = '';
         this.loadTasks();
       },
-      async logout() {
-          await this.$store.dispatch('logout');
-          location.href = this.url_top_id;
-      }
+      // async logout() {
+      //     await this.$store.dispatch('logout');
+      //     location.href = this.url_top_id;
+      // }
     }
   }
   </script>
@@ -66,7 +65,7 @@
     gap: 36px;
     min-height: 100vh;
     background-color: #efe;
-    padding: 36px;
+    padding: 0 36px 0 36px;
     box-sizing: border-box;
   
     .title {

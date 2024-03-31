@@ -5,6 +5,8 @@ import SamplePage from '@/views/SamplePage'
 import SignUpPage from '@/views/SignUpPage'
 import LoginPage from '@/views/LoginPage'
 import TodoPage from '@/views/TodoPage'
+import EveryonePage from '@/views/EveryonePage'
+import DetailPage from '@/views/DetailPage'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -31,6 +33,30 @@ const routes = [
     path: '/todo',
     name: 'TodoPage',
     component: TodoPage,
+    beforeEnter: (to, from, next) => {
+      if(!store.getters.loggedIn) {
+        next({name: 'TopPage'})
+      } else {
+        next();
+      }
+    }
+  },
+  {
+    path: '/everyone',
+    name: 'EveryonePage',
+    component: EveryonePage,
+    beforeEnter: (to, from, next) => {
+      if(!store.getters.loggedIn) {
+        next({name: 'TopPage'})
+      } else {
+        next();
+      }
+    }
+  },
+  {
+    path: '/detail',
+    name: 'DetailPage',
+    component: DetailPage,
     beforeEnter: (to, from, next) => {
       if(!store.getters.loggedIn) {
         next({name: 'TopPage'})
