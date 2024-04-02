@@ -1,6 +1,9 @@
 <template>
     <div class="todo-page">
       <Header class="header"/>
+      <div class="task-list">
+        <div class="add-button">ファイトしたタスク一覧</div>
+      </div>
       <div class="add-task-form">
           <input class="input-sample-item-text" type="text" v-model="inputText">
           <div class="add-button" @click="addTask">追加</div>
@@ -49,10 +52,9 @@
         this.inputText = '';
         this.loadTasks();
       },
-      // async logout() {
-      //     await this.$store.dispatch('logout');
-      //     location.href = this.url_top_id;
-      // }
+      async showFollowList() {
+        await this.$store.dispatch('showFollowList');
+      }
     }
   }
   </script>
@@ -68,9 +70,10 @@
     padding: 0 36px 0 36px;
     box-sizing: border-box;
   
-    .title {
-      font-size: 36px;
-      font-weight: bold;
+    .task-list {
+      font-size: large;
+      font-weight: bolder;
+      margin-right: 80%;
     }
   
     .header {
@@ -98,24 +101,6 @@
         border: 1px solid #ddd;
         border-radius: 4px;
       }
-  
-      .add-button {
-        height: 40px;
-        width: 85px;
-        border-radius: 4px;
-        line-height: 40px;
-        text-align: center;
-        background-color: #5af;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        user-select: none;
-  
-        &:hover {
-          background-color: #7cf;
-        }
-      }
     }
   
     .task-cards {
@@ -123,6 +108,25 @@
       gap: 24px;
       flex-wrap: wrap;
       width: 1000px;
+    }
+
+    .add-button {
+      height: auto;
+      width: auto;
+      padding: 0 20px 0 20px;
+      border-radius: 4px;
+      line-height: 40px;
+      text-align: center;
+      background-color: #5af;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        background-color: #7cf;
+      }
     }
   }
   </style>

@@ -2,8 +2,8 @@
   <div class="detail-page">
     <Header class="header"/>
       <div class="task-detail-cards">
-        <div class="task-card" v-for="(taskDetail, index) in taskDetails" :key="index">
-          {{ taskDetail }}
+        <div class="tasks" v-for="(taskDetail, index) in taskDetails" :key="index">
+          <p class="tasks-title">{{ taskDetail }}</p>
         </div>
       </div>
   </div>
@@ -83,7 +83,7 @@ export default {
     width: 1000px;
   }
 
-  .task-card {
+  .tasks {
     position: relative;
     width: 300px;
     height: min-content;
@@ -95,6 +95,12 @@ export default {
     border-radius: 8px;
     box-shadow: 2px 2px 4px #bbb;
     cursor: pointer;
+
+    &-title {
+      font-size: 16px;
+      font-weight: bold;
+      user-select: none;
+    }
   
     &:hover {
       right: 4px;

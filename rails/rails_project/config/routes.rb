@@ -17,8 +17,11 @@ Rails.application.routes.draw do
     get '/logout', to: 'sessions#destroy'
 
     get '/everyone', to: 'everyone#index'
-    # get '/task_details', to: 'everyone#detail'
     post '/get_user', to: 'everyone#getUser'
+
+    post '/follow', to: 'relationships#create'
+    post '/unfollow', to: 'relationships#destroy'
+    post '/isFollow', to: 'relationships#isFollow'
 
     get '*path', to: 'application#not_found'
   end

@@ -12,8 +12,8 @@ export default new Vuex.Store({
     loggedIn: false,
     tasks: [],
     taskDetails: [],
-    // userId: 0,
     taskUser: [],
+    isFollow: false,
   },
   getters: {
     sampleItems: state => state.sampleItems,
@@ -21,6 +21,8 @@ export default new Vuex.Store({
     tasks: state => state.tasks,
     userId: state => state.userId,
     taskUser: state => state.taskUser,
+    // followedUser: state => state.followedUser,
+    isFollow: state => state.isFollow,
   },
   actions: {
     async loadSampleItems({commit}) {
@@ -65,6 +67,25 @@ export default new Vuex.Store({
       const users = res.data.user_params;
       commit('setUsers', { users });
       return users;
+    },
+    async isFollow({commit}, {user_id}) {
+      const res = await api.post('isFollow', { relationship: { user_id: user_id } })
+      const isFollow = res.data.followed_params;
+      commit('isFollow', {isFollow});
+      return isFollow
+    },
+    async followBtnClicked({commit}, {user_id}) {
+      const res = await api.post('isFollow', { relationship: { user_id: user_id } })
+      const isFollow = res.data.followed_params;
+      if (!isFollow) {
+        await api.post('follow', { relationship: { user_id: user_id } })
+        alert("フォローしました");
+        commit('isFollow', {isFollow});
+      } else {
+        await api.post('unfollow', { relationship: { user_id: user_id } })
+        alert("フォローを解除しました");
+        commit('isFollow', {isFollow});
+      }
     },
     async login({commit}, {name, email, password}) {
       const res = await api.post('login', {login_data: {name: name, email: email, password: password}});
@@ -117,8 +138,16 @@ export default new Vuex.Store({
     },
     setUser(state, { taskUser }) {
       state.taskUser = taskUser;
-      // state.userId = userId;
-    }
+    },
+    // followUser(state) {
+    //   state.isFollowed = true;
+    // },
+    // unfollowUser(state) {
+    //   state.isFollowed = false;
+    // }
+    isFollow(state, { isFollow }) {
+      state.isFollow = isFollow;
+    },
   },
   modules: {},
   plugins: [createPersistedState(
@@ -128,7 +157,6 @@ export default new Vuex.Store({
       paths: [
         'loggedIn',
         'taskUser',
-        // 'userId',
       ],
       storage: window.sessionStorage,
     }

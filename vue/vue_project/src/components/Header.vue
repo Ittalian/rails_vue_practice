@@ -38,7 +38,7 @@ methods: {
 .header {
   height: 200px;
   width: 100%;
-  padding-left: 110px;
+  padding-left: 10%;
 }
 .right-section {
   width: 50%;
@@ -47,16 +47,23 @@ methods: {
 }
 .signup-link {
   margin-right: 10px;
+  height: 30px;
 }
 .login-link {
   margin-right: 10px;
+  height: 30px;
 }
 .todo-link {
   margin-right: 10px;
+  height: 30px;
+}
+.everyone-link {
+  height: 30px;
 }
 .add-button {
   height: 40px;
-  width: 20%;
+  width: 150px;
+  padding: 5px;
   border-radius: 4px;
   line-height: 40px;
   text-align: center;
