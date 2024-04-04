@@ -1,7 +1,7 @@
 <template>
   <div class="detail-page">
     <Header class="header"/>
-    <div class="task">{{ isNoTask ? "タスクがありません" : this.userName + "タスク一覧" }}</div>
+    <div class="task">{{ this.$store.state.taskUser.length == 0 ? "タスクがありません" : "タスク一覧" }}</div>
       <div class="task-detail-cards">
         <div class="tasks" v-for="(taskTitle, index) in taskTitles" :key="index">
           <p class="tasks-title">{{ taskTitle }}</p>
@@ -26,8 +26,6 @@ export default {
       taskTitles: [],
       taskIds: [],
       taskUserIds: [],
-      userName: "",
-      isNoTask: false,
     };
   },
   created() {
@@ -40,7 +38,6 @@ export default {
         this.taskIds.push(this.$store.state.taskUser[i].id);
         this.taskUserIds.push(this.$store.state.taskUser[i].user_id);
       }
-      this.userName = await this.$store.dispatch('getUserName');
     },
   }
 }

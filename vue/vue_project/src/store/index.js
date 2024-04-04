@@ -69,7 +69,6 @@ export default new Vuex.Store({
       commit('setUser', {taskUser});
       return taskUser
     },
-    // async getUserName({commit})
     async loadUsers({commit}) {
       const res = await api.get('everyone');
       const users = res.data.user_params;

@@ -34,7 +34,7 @@
     methods: {
       async getUser() {
         await this.$store.dispatch('getUser', { user_id: this.user.id });
-        // location.href = this.url_detail_id;
+        location.href = this.url_detail_id;
       },
       async followBtnClicked() {
         await this.$store.dispatch('followBtnClicked', { user_id: this.user.id });
