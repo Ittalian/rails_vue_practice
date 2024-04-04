@@ -30,5 +30,7 @@ module RailsProject
     # libディレクトリ読み込み設定
     config.autoload_paths += Dir["#{config.root}/lib"]
     config.autoload_paths += Dir["#{config.root}/lib/**/*"]
+
+    config.action_controller.forgery_protection_origin_check = false
   end
 end

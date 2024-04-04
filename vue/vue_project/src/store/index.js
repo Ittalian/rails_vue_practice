@@ -14,6 +14,9 @@ export default new Vuex.Store({
     taskDetails: [],
     taskUser: [],
     isFollow: false,
+    isLike: false,
+    likeCount: 0,
+    likeTasks: [],
   },
   getters: {
     sampleItems: state => state.sampleItems,
@@ -21,8 +24,10 @@ export default new Vuex.Store({
     tasks: state => state.tasks,
     userId: state => state.userId,
     taskUser: state => state.taskUser,
-    // followedUser: state => state.followedUser,
     isFollow: state => state.isFollow,
+    isLike: state => state.isLike,
+    likeCount: state => state.likeCount,
+    likeTasks: state => state.likeTasks,
   },
   actions: {
     async loadSampleItems({commit}) {
@@ -60,8 +65,11 @@ export default new Vuex.Store({
     async getUser({commit}, {user_id}) {
       const res = await api.post('get_user', { task_user: { user_id: user_id }})
       const taskUser = res.data.task_detail_params;
+      console.log(taskUser);
       commit('setUser', {taskUser});
+      return taskUser
     },
+    // async getUserName({commit})
     async loadUsers({commit}) {
       const res = await api.get('everyone');
       const users = res.data.user_params;
@@ -86,6 +94,39 @@ export default new Vuex.Store({
         alert("フォローを解除しました");
         commit('isFollow', {isFollow});
       }
+    },
+    async checkLike({commit}, {task_id}) {
+      const res = await api.post('islike', { like: { task_id: task_id } })
+      const isLike = res.data.like_params;
+      commit('isLike', {isLike});
+      return isLike
+    },
+    async giveLike({commit}, {task_id}) {
+      const res = await api.post('islike', { like: { task_id: task_id } })
+      const isLike = !res.data.like_params;
+      if (isLike) {
+        await api.post('like', { like: { task_id: task_id } })
+        alert("いいねしました");
+        commit('isLike', {isLike});
+        return isLike
+      } else {
+        await api.post('unlike', { like: { task_id: task_id } })
+        alert("いいねを解除しました");
+        commit('isLike', {isLike});
+        return isLike
+      }
+    },
+    async countLike({commit}, {task_id}) {
+      const res = await api.post('countlike',{task_id: task_id})
+      const likeCount = res.data.like_params;
+      commit('countLike', {likeCount});
+      return likeCount
+    },
+    async getLikeTasks({commit}) {
+      const res = await api.get('like');
+      const likeTasks = res.data.like_params;
+      commit('setLikeTasks', {likeTasks});
+      return likeTasks;
     },
     async login({commit}, {name, email, password}) {
       const res = await api.post('login', {login_data: {name: name, email: email, password: password}});
@@ -139,15 +180,18 @@ export default new Vuex.Store({
     setUser(state, { taskUser }) {
       state.taskUser = taskUser;
     },
-    // followUser(state) {
-    //   state.isFollowed = true;
-    // },
-    // unfollowUser(state) {
-    //   state.isFollowed = false;
-    // }
     isFollow(state, { isFollow }) {
       state.isFollow = isFollow;
     },
+    isLike(state, {isLike}) {
+      state.isLike = isLike;
+    },
+    countLike(state, {likeCount}) {
+      state.likeCount = likeCount;
+    },
+    setLikeTasks(state, {likeTasks}) {
+      state.likeTasks = likeTasks;
+    }
   },
   modules: {},
   plugins: [createPersistedState(
@@ -157,6 +201,7 @@ export default new Vuex.Store({
       paths: [
         'loggedIn',
         'taskUser',
+        'likeTasks',
       ],
       storage: window.sessionStorage,
     }

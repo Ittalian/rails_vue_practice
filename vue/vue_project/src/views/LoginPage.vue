@@ -2,7 +2,6 @@
     <div class="top-page">
       <Header class="header" />
       <div class="title">ログイン</div>
-      <!-- <router-link :to="{ name: 'SamplePage' }">サンプルページを見る</router-link> -->
         <div class="input-area">
             <div>
               <label>ユーザー名</label>

@@ -1,8 +1,8 @@
 <template>
   <header>
     <div class="header-section">
-      <div class="add-button" @click="logout" v-show="$store.state.loggedIn">ログアウト</div>
-      <span class="header">{{ $store.state.loggedIn == true ? "ログイン済み" : "未ログイン" }}</span>
+      <div class="logout-button" @click="logout" v-show="$store.state.loggedIn">ログアウト</div>
+      <span class="header">{{ $store.state.loggedIn ? "ログイン済み" : "未ログイン" }}</span>
       <div class="right-section">
         <router-link :to="{ name: 'SignUpPage' }" class="signup-link">新規登録</router-link>
         <router-link :to="{ name: 'LoginPage' }" class="login-link">ログイン</router-link>
@@ -43,7 +43,7 @@ methods: {
 .right-section {
   width: 50%;
   font-size: medium;
-  display: flex; 
+  display: flex;
 }
 .signup-link {
   margin-right: 10px;
@@ -60,22 +60,23 @@ methods: {
 .everyone-link {
   height: 30px;
 }
-.add-button {
+.logout-button {
   height: 40px;
   width: 150px;
-  padding: 5px;
+  margin-top: 5px;
+  padding: 0 5px 0 5px;
   border-radius: 4px;
+  border: solid black;
   line-height: 40px;
   text-align: center;
-  background-color: #5af;
-  color: white;
+  color: black;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   user-select: none;
 
   &:hover {
-    background-color: #7cf;
+    background-color: rgb(218, 10, 10);
   }
 }
 </style>

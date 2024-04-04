@@ -23,6 +23,12 @@ Rails.application.routes.draw do
     post '/unfollow', to: 'relationships#destroy'
     post '/isFollow', to: 'relationships#isFollow'
 
+    post '/like', to: 'likes#create'
+    post '/unlike', to: 'likes#destroy'
+    post '/islike', to: 'likes#isLike'
+    post '/countlike', to: 'likes#countLike'
+    get '/like', to: 'likes#myLike'
+
     get '*path', to: 'application#not_found'
   end
 end

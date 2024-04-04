@@ -1,6 +1,6 @@
 <template>
     <div class="users" >
-      <div class="users-title">{{ user.name }}のタスク</div>
+      <div class="users-title">{{ user.name }}</div>
       <div class="buttons">
         <div class="complete-button" @click="getUser">詳細</div>
         <div class="follow-button" @click="followBtnClicked">{{ this.isFollowing == true ? "フォロー済み" : "フォロー" }}</div>
@@ -34,7 +34,7 @@
     methods: {
       async getUser() {
         await this.$store.dispatch('getUser', { user_id: this.user.id });
-        location.href = this.url_detail_id;
+        // location.href = this.url_detail_id;
       },
       async followBtnClicked() {
         await this.$store.dispatch('followBtnClicked', { user_id: this.user.id });

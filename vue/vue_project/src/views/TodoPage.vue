@@ -1,10 +1,8 @@
 <template>
     <div class="todo-page">
       <Header class="header"/>
-      <div class="task-list">
-        <div class="add-button">ファイトしたタスク一覧</div>
-      </div>
       <div class="add-task-form">
+          <router-link :to="{ name: 'LikeMyPage' }" class="like-link">いいねしたタスク一覧</router-link>
           <input class="input-sample-item-text" type="text" v-model="inputText">
           <div class="add-button" @click="addTask">追加</div>
       </div>
@@ -70,12 +68,6 @@
     padding: 0 36px 0 36px;
     box-sizing: border-box;
   
-    .task-list {
-      font-size: large;
-      font-weight: bolder;
-      margin-right: 80%;
-    }
-  
     .header {
           text-align: center;
           font-size:xx-large;
@@ -92,6 +84,13 @@
       display: flex;
       gap: 36px;
       align-items: center;
+      margin-right: 200px;
+
+      .like-link {
+        margin-right: 30px;
+        font-size: large;
+        font-weight: bold;
+      }
   
       .input-sample-item-text {
         height: 36px;

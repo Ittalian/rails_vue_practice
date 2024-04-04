@@ -1,9 +1,11 @@
 <template>
   <div class="detail-page">
     <Header class="header"/>
+    <div class="task">{{ isNoTask ? "タスクがありません" : this.userName + "タスク一覧" }}</div>
       <div class="task-detail-cards">
-        <div class="tasks" v-for="(taskDetail, index) in taskDetails" :key="index">
-          <p class="tasks-title">{{ taskDetail }}</p>
+        <div class="tasks" v-for="(taskTitle, index) in taskTitles" :key="index">
+          <p class="tasks-title">{{ taskTitle }}</p>
+          <GoodButton :taskId=taskIds[index] :taskUserId=taskUserIds[index]></GoodButton>
         </div>
       </div>
   </div>
@@ -11,26 +13,34 @@
 
 <script>
 import Header from '@/components/Header'
+import GoodButton from '../components/GoodButton.vue';
 
 export default {
-  name: 'EveryonePage',
+  name: 'DetailPage',
   components: {
     Header,
+    GoodButton,
   },
   data() {
     return {
-      taskDetails: [],
-      url_top_id: '/',
+      taskTitles: [],
+      taskIds: [],
+      taskUserIds: [],
+      userName: "",
+      isNoTask: false,
     };
   },
   created() {
-    this.loadTaskDetails();
+    this.loadTasks();
   },
   methods: {
-    async loadTaskDetails() {
+    async loadTasks() {
       for (var i = 0; i < this.$store.state.taskUser.length; i++) {
-        this.taskDetails.push(this.$store.state.taskUser[i].title);
+        this.taskTitles.push(this.$store.state.taskUser[i].title);
+        this.taskIds.push(this.$store.state.taskUser[i].id);
+        this.taskUserIds.push(this.$store.state.taskUser[i].user_id);
       }
+      this.userName = await this.$store.dispatch('getUserName');
     },
   }
 }
@@ -64,9 +74,10 @@ export default {
           background-color: #7cf;
       }
   }
-  .title {
-      font-size: large;
-      font-weight: bolder;
+
+  .task {
+    font-size: large;
+    font-weight: bolder;
   }
 
   .header {
